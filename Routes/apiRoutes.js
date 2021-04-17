@@ -1,8 +1,6 @@
-// ROUTING
-
+const router = require("express").Router();
 const { Fitness } = require("../models");
 
-const router = require("express").Router();
 
 router.get("/api/workouts", (req, res) => {
   console.log("/api/workouts");
@@ -16,12 +14,11 @@ router.get("/api/workouts", (req, res) => {
 router.put("/api/workouts/:id", (req, res) => {
   const id = req.params.id;
   const body = req.body;
-  Fitness.updateOne({ id: id }, { $push: { listOfExercises: body } }).then(
-    (data) => {
+  Fitness.updateOne({ _id: id }, { $push: { listOfExercises: body } })
+  .then((data) => {
       res.json(data);
-    }
-  );
-  console.log("/api/workouts/:id");
+    })
+    .catch((err) => console.log(err));
 });
 
 router.post("/api/workouts", (req, res) => {
