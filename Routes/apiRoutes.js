@@ -6,6 +6,8 @@ router.get("/api/workouts", (req, res) => {
   console.log("/api/workouts");
   Workout.find()
     .then((data) => {
+      console.log("*******")
+    console.log(data)
       res.json(data);
     })
     .catch((err) => console.log(err));
@@ -14,7 +16,9 @@ router.get("/api/workouts", (req, res) => {
 router.put("/api/workouts/:id", (req, res) => {
   const id = req.params.id;
   const body = req.body;
-  Workout.updateOne({ _id: id }, { $push: { listOfExercises: body } })
+  console.log(id)
+  console.log(body)
+  Workout.updateOne({ _id: id }, { $push: { exercises: body } })
   .then((data) => {
       res.json(data);
     })
@@ -23,7 +27,8 @@ router.put("/api/workouts/:id", (req, res) => {
 
 router.post("/api/workouts", (req, res) => {
   const body = req.body;
-  Workout.create(body)
+  console.log("inside post route:", req.body)
+  Workout.create({})
   .then((data) => {
     res.json(data);
   })
